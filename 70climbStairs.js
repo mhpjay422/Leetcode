@@ -7,7 +7,7 @@
 
 //     Example 1 :
 
-//     Input: 2
+// Input: 2
 // Output: 2
 // Explanation: There are two ways to climb to the top.
 // 1. 1 step + 1 step
@@ -27,5 +27,14 @@
 //     1 <= n <= 45
 
 function climbStairs(n) {
+    let table = new Array(n + 1)
 
+    table[0] = 1
+    table[1] = 1
+
+    for(let i = 2; i < table.length; i++) {
+        table[i] = table[i - 1] + table[i - 2]
+    }
+
+    return table[table.length - 1]
 }
