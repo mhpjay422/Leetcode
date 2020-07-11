@@ -2,6 +2,16 @@
 //  https://leetcode.com/problems/balanced-binary-tree/
 
 
-function isBalanced(root) {
+function getHeight(root) {
+    if (!root) return -1;
 
+    return 1 + Math.max(getHeight(root.left), getHeight(root.right))
+}
+
+function isBalanced(root) {
+    if (!root) return true;
+    let heightBal = Math.abs(
+        getHeight(root.left) - getHeight(root.right)
+    ) <= 1
+    return heightBal && isBalanced(root.left) && isBalanced(root.right)
 }
