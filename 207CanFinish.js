@@ -37,6 +37,41 @@
 
 //  https://leetcode.com/problems/course-schedule/
 
+function buildGraph(prerequisites) {
+    let graph = {};
+    
+    prerequisites.forEach(pair => {
+        let [course, prereq] = pair.map(String);;
+        if(course in graph) {
+            graph[course].push(prereq)
+        } else {
+            graph[course] = [ prereq ]
+        }
+
+        if(!(prereq in graph)) graph[prereq] = [];
+    });
+
+    return graph;
+}
+
 function canFinish(numCourses, prerequisites) {
+    let graph = buildGraph(prerequisites)
+    let totalCourses = Object.keys(graph).length;
+    let completed = new Set();
+
+    let eligibleCourseToComplete = true;
+    while(eligibleCourseToComplete) {
+        eligibleCourseToComplete = false;
+
+        for(let course in graph) {
+            let prereqsCheck = graph[course].every(prereq => completed.has(prereq))
+            if(!completed.has(course) && prereqsCheck) {
+                completed.add(course);
+                eligibleCourseToComplete = true;
+            }
+        }
+    }
+
+    return totalCourses === completed.size;
 
 }
