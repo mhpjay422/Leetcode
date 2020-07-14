@@ -23,3 +23,17 @@
 // Output: true
 // Note:
 //     You may assume both s and t have the same length.
+
+var isIsomorphic = function (s, t) {
+    let sArr = [];
+    let tArr = [];
+
+    for (let i = 0; i < s.length; i++) {
+
+        sArr.push(s.indexOf(s[i]))
+        tArr.push(t.indexOf(t[i]))
+
+    }
+
+    return sArr.join() === tArr.join();
+};
