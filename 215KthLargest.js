@@ -12,5 +12,8 @@
 //     You may assume k is always valid, 1≤ k≤ array 's length.
 
 var findKthLargest = function (nums, k) {
-
+    nums = nums.sort((a, b) => a - b);
+    return nums[nums.length - k]
 };
+
+
