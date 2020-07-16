@@ -24,54 +24,68 @@ class Node {
         this.children = {};
         this.isTerminal = false;
     }
+
 }
-
-
 
 class Trie {
     constructor() {
         this.root = new Node();
-    }
-};
+    };
+    /**
+     * Inserts a word into the trie. 
+     * @param {string} word
+     * @return {void}
+     */
 
-/**
- * Inserts a word into the trie. 
- * @param {string} word
- * @return {void}
- */
     insert(word, root = this.root) {
         let letter = word[0];
+        if (!(letter in root.children)) root.children[letter] = new Node();
 
-        if (!(letter in root.children)) root.children[letter] = new Node;
         if (word.length === 1) {
-            root.isTerminal = true;
-        } else {
-            this.insert(word.slice(1), root.children[letter])
+            root.children[letter].isTerminal = true;
+            return word;
         }
-};
+        this.insert(word.slice(1), root.children[letter])
+    }
+    /**
+     * Returns if the word is in the trie. 
+     * @param {string} word
+     * @return {boolean}
+     */
 
-/**
- * Returns if the word is in the trie. 
- * @param {string} word
- * @return {boolean}
- */
     search(word, root = this.root) {
+        if (word.length === 0) {
+            if (root.isTerminal) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
-};
+        let letter = word[0];
+        if (!(letter in root.children)) return false;
 
-/**
- * Returns if there is any word in the trie that starts with the given prefix. 
- * @param {string} prefix
- * @return {boolean}
- */
-    startsWith(prefix) {
+        return this.search(word.slice(1), root.children[letter])
+    }
+    /**
+     * Returns if there is any word in the trie that starts with the given prefix. 
+     * @param {string} prefix
+     * @return {boolean}
+     */
 
-};
+    startsWith = function (prefix, root = this.root) {
+        if (!prefix.length) return true;
+        let letter = prefix[0];
 
-/** 
- * Your Trie object will be instantiated and called as such:
- * var obj = new Trie()
- * obj.insert(word)
- * var param_2 = obj.search(word)
- * var param_3 = obj.startsWith(prefix)
- */
+
+        if (!(letter in root.children)) return false;
+        return this.startsWith(prefix.slice(1), root.children[letter])
+    };
+    /** 
+     * Your Trie object will be instantiated and called as such:
+     * var obj = new Trie()
+     * obj.insert(word)
+     * var param_2 = obj.search(word)
+     * var param_3 = obj.startsWith(prefix)
+     */
+}
